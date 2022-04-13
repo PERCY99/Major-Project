@@ -1,3 +1,4 @@
+from turtle import update
 import serial
 from serial import Serial
 import time
@@ -9,6 +10,12 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import datetime
+import json
+#import pandas as pd
+
+def write_to_file(dict) :
+    with open("sample.json", "w") as outfile:
+        data = json.loads( outfile )
 
 datetime_object = datetime.datetime.now()
 
@@ -29,17 +36,22 @@ while True:
     
     newdata = data.split()
     
-    if( len(newdata) !=0 ):
+    if( len(newdata) >1 ):
         count += 1
         dict[newdata[0]] = newdata[1]
 
         if( count == 19 ):
-            print(dict)
+            #print(dict)
+            dict["datetime"] = str(datetime_object)
+            json_object = json.dumps(dict)
+            write_to_file(dict)
+            print(json_object)
             count = 0
             dict = {}
-            # URl='https://api.thingspeak.com/update?api_key='
+            # URl='https://api.thingspeak.com/channels/1554808/bulk_update.json'
             # KEY='OWW4C0TPLPKDV3FW'
             # HEADER='&field1={}'.format(data)
+            
     
     
     # db.collection('collection').add(dict)

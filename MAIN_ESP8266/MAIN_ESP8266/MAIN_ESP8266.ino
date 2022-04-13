@@ -36,9 +36,9 @@ int MQ9 = A9 ;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Add your data: SSID + KEY + host + location + id + password
 //////////////////////////////////////////////
-const char SSID_ESP[] = "MODINET_6G";         //Give EXACT name of your WIFI
-const char SSID_KEY[] = "05554171";            //Add the password of that WIFI connection
-const char* host = "airpollution.epizy.com  ";    //Add the host without "www" Example: electronoobs.com
+const char SSID_ESP[] = "Redmi Note 3";         //Give EXACT name of your WIFI
+const char SSID_KEY[] = "sahil@123";            //Add the password of that WIFI connection
+const char* host = "airpollution.epizy.com";    //Add the host without "www" Example: electronoobs.com
 String NOOBIX_id = "1";                         //This is the ID you have on your database.
 String NOOBIX_password = "12345";               //Add the password from the database, also maximum 5 characters and only numerical values
 String location_url = "/data.php?id=";          //location of your PHP file on the server. In this case the index.php is directly on the first folder of the server
@@ -189,8 +189,7 @@ void setup(){//        SETUP     START
   Serial.begin(BAUD_RATE); //for status and debug
   
   delay(5000);//delay before kicking things off
-
-//setup_ESP();//go setup the ESP commented
+  //setup_ESP();//go setup the ESP 
  
 }
 
@@ -210,7 +209,6 @@ void loop(){
   sent_MQ7 = analogRead(MQ7);
   sent_MQ8 = analogRead(MQ8);
   sent_MQ9 = analogRead(MQ9);
- // Serial.print("hello world");
   
   // BME280 READ
   sent_BME_temp  = bme.readTemperature();
@@ -231,7 +229,7 @@ void loop(){
       }
     }
   }
-  //ESP8266.listen();
+  ESP8266.listen();
   
   // PM2.5 Dust Density calc
   digitalWrite(PMD, LOW);                 // power on the LED
@@ -243,7 +241,7 @@ void loop(){
   calcVoltage = voMeasured * (5/ 1024.0);            // recover voltage     //0 - 5V mapped to 0 - 1023 integer values
   dustDensity = (0.17 * calcVoltage - 0.1) * 1000.0;
   sent_PMA    = dustDensity;
-
+  
   Serial.print("MQ1 ");Serial.print(sent_MQ1);Serial.print("\n");
   Serial.print("sent_MQ2_lpg ");Serial.print(sent_MQ2_lpg);Serial.print("\n");
   Serial.print("sent_MQ2_co ");Serial.print(sent_MQ2_co);Serial.print("\n");
@@ -263,13 +261,11 @@ void loop(){
   Serial.print("sent_GPS_lat ");Serial.print(sent_GPS_lat);Serial.print("\n");
   Serial.print("sent_GPS_alt ");Serial.print(sent_GPS_alt);Serial.print("\n");
   Serial.print("sent_PMA ");Serial.print(sent_PMA);Serial.print("\n");
- 
-
+  
   send_to_server_1(sent_MQ1,  sent_MQ2_lpg, sent_MQ2_co, sent_MQ2_smoke, sent_MQ3,
                    sent_MQ4, sent_MQ5, sent_MQ6, sent_MQ7, sent_MQ8, sent_MQ9,
                    sent_BME_temp, sent_BME_press, sent_BME_alt, sent_BME_humid,
-                   sent_GPS_lon, sent_GPS_lat, sent_GPS_alt, sent_PMA);
-                     
+                   sent_GPS_lon, sent_GPS_lat, sent_GPS_alt, sent_PMA);  
 
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
   delay(1000);                       // wait for a second

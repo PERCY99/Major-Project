@@ -1,23 +1,23 @@
 boolean connect_ESP(){//returns 1 if successful or 0 if not
 
 
-  //Serial.println("CONNECTING");
+  Serial.println("CONNECTING");
   //or 443 para HTTPS
   //
-  //ESP8266.print("AT+CIPSTART=0,\"TCP\",\"www.noobix.000webhostapp.com\",80\r\n");//connect to your web server
+  ESP8266.print("AT+CIPSTART=0,\"TCP\",\"www.noobix.000webhostapp.com\",80\r\n");//connect to your web server
 
   
   //read_until_ESP(keyword,size of the keyword,timeout in ms, data save 0-no 1-yes 'more on this later') 
   if(read_until_ESP(keyword_OK,sizeof(keyword_OK),5000,0)){//go look for 'OK' and come back
   serial_dump_ESP();//get rid of whatever else is coming
-//  #Serial.println("CONNECTED");//yay, connected
+  Serial.println("CONNECTED");//yay, connected
   ESP8266.print("AT+CIPSEND=0,");//send AT+CIPSEND=0, size of payload
   ESP8266.print(payload_size);//the payload size
   serial_dump_ESP();//everything is echoed back, so get rid of it
   ESP8266.print("\r\n\r\n");//cap off that command with a carriage return and new line feed
   
   if(read_until_ESP(keyword_carrot,sizeof(keyword_carrot),5000,0)){//go wait for the '>' character, ESP ready for the payload
-    //Serial.println("READY TO SEND");
+    Serial.println("READY TO SEND");
     
     Serial.println(payload_size);
     
@@ -27,7 +27,7 @@ boolean connect_ESP(){//returns 1 if successful or 0 if not
 
 
     
-    //Serial.print(payload[i]);    
+    Serial.print(payload[i]);    
 
     }
 
@@ -50,8 +50,8 @@ boolean connect_ESP(){//returns 1 if successful or 0 if not
   
   }//First OK
   else{
-  //Serial.println("FAILED TO CONNECT");//something went wrong
-//  setup_ESP();//optional, this will go setup the module and attempt to repair itself - connect to SSID, set the CIPMUX, etc...
+  Serial.println("FAILED TO CONNECT");//something went wrong
+  setup_ESP();//optional, this will go setup the module and attempt to repair itself - connect to SSID, set the CIPMUX, etc...
   }
   
 }// VOID CONNECT FUNCTION

@@ -17,7 +17,7 @@ boolean read_until_ESP(const char keyword1[], int key_size, int timeout_val, byt
             //timing control
             while(!ESP8266.available()){//wait until a new byte is sent down from the ESP - good way to keep in lock-step with the serial port
               if((millis()-timeout_start_val)>timeout_val){//if nothing happens within the timeout period, get out of here
-                //Serial.println("timeout 1");
+                Serial.println("timeout 1");
                 return 0;//this will end the function
               }//timeout
             }// while !avail

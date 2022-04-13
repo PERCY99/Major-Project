@@ -56,11 +56,11 @@ URL_withPacket += "Connection: close\r\n\r\n";
 
 
    
-  if(connect_ESP()){//this calls 'connect_ESP()' and expects a '1' back if successful
+  //if(connect_ESP()){//this calls 'connect_ESP()' and expects a '1' back if successful
   //nice, we're in and ready to look for data
   //first up, we need to parse the returned data  _t1123##_d15##_d210##
   //Serial.println("connected ESP");  
-  }//connect ESP
+  //}connect ESP
 
 
 }//connect web host
