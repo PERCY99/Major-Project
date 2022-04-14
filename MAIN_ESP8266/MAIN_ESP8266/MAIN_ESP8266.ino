@@ -36,8 +36,8 @@ int MQ9 = A9 ;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Add your data: SSID + KEY + host + location + id + password
 //////////////////////////////////////////////
-const char SSID_ESP[] = "Redmi Note 3";         //Give EXACT name of your WIFI
-const char SSID_KEY[] = "sahil@123";            //Add the password of that WIFI connection
+const char SSID_ESP[] = "";         //Give EXACT name of your WIFI
+const char SSID_KEY[] = "";            //Add the password of that WIFI connection
 const char* host = "airpollution.epizy.com";    //Add the host without "www" Example: electronoobs.com
 String NOOBIX_id = "1";                         //This is the ID you have on your database.
 String NOOBIX_password = "12345";               //Add the password from the database, also maximum 5 characters and only numerical values
