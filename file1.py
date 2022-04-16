@@ -43,22 +43,17 @@ while True:
         if( count == 19 ):
             #print(dict)
             dict["datetime"] = str(datetime_object)
+
             json_object = json.dumps(dict)
-            write_to_file(dict)
+            with open("sample.json", "r+") as outfile:
+                if len(outfile.read()) == 0:
+                    outfile.write(json_object)
+                else:
+                    outfile.write(',\n' + json_object)
             print(json_object)
             count = 0
             dict = {}
+
             # URl='https://api.thingspeak.com/channels/1554808/bulk_update.json'
             # KEY='OWW4C0TPLPKDV3FW'
             # HEADER='&field1={}'.format(data)
-            
-    
-    
-    # db.collection('collection').add(dict)
-    
-    # NEW_URL = URl+KEY+HEADER
-    # print(NEW_URL)
-    # data=urllib.request.urlopen(NEW_URL)
-    # print(data)
-
-
