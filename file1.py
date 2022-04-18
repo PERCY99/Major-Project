@@ -13,10 +13,6 @@ import datetime
 import json
 #import pandas as pd
 
-def write_to_file(dict) :
-    with open("sample.json", "w") as outfile:
-        data = json.loads( outfile )
-
 datetime_object = datetime.datetime.now()
 
 
