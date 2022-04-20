@@ -36,14 +36,8 @@ int MQ9 = A9 ;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Add your data: SSID + KEY + host + location + id + password
 //////////////////////////////////////////////
-const char SSID_ESP[] = "MODINET_6G";         //Give EXACT name of your WIFI
-const char SSID_KEY[] = "05554171";   
-//String myAPI = "LSBUWRRBL8EK7TXK";   // API Key
-//String myHOST = "api.thingspeak.com";
-//String myPORT = "80";
-//String myFIELD = "field1"; 
-//int sendVal;
-//Add the password of that WIFI connection
+const char SSID_ESP[] = "Redmi Note 3";         //Give EXACT name of your WIFI
+const char SSID_KEY[] = "sahil@123";            //Add the password of that WIFI connection
 const char* host = "airpollution.epizy.com";    //Add the host without "www" Example: electronoobs.com
 String NOOBIX_id = "1";                         //This is the ID you have on your database.
 String NOOBIX_password = "12345";               //Add the password from the database, also maximum 5 characters and only numerical values
@@ -80,6 +74,7 @@ float dustDensity = 0.0;
 //                      float sent_BME_temp,float sent_BME_press,float sent_BME_alt,float sent_BME_humid,
 //                      double sent_GPS_lon,double sent_GPS_lat,float sent_GPS_alt,float sent_PMA);
 //void connect_webhost();
+
 unsigned long timeout_start_val;
 char scratch_data_from_ESP[20];//first byte is the length of bytes
 char payload[200];
@@ -91,8 +86,8 @@ char ip_address[16];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Variable to SEND to the DATABASE
 float sent_MQ1 = 0.0;
-float sent_MQ2_lpg = 0.0;
-float sent_MQ2_co = 0.0;
+float sent_MQ2_lpg   = 0.0;
+float sent_MQ2_co    = 0.0;
 float sent_MQ2_smoke = 0.0;
 float sent_MQ3 = 0.0;
 float sent_MQ4 = 0.0;
@@ -158,7 +153,6 @@ TinyGPSPlus gps;
 MQ2 mq2(pin_MQ2);
 
 void setup(){//        SETUP     START
-Serial.println("hello");
 
   //Pin Modes for ESP TX/RX
   pinMode(ESP8266_RX, INPUT);
@@ -188,23 +182,16 @@ Serial.println("hello");
   
 
   
-  ESP8266.begin(BAUD_RATE);//default baudrate for ESP 
+  ESP8266.begin(BAUD_RATE);//default baudrate for ESP
   ESP8266.listen();//not needed unless using other software serial instances
-  bool status;
-    
-    // default settings
-    status = bme.begin(0x76);  //The I2C address of the sensor I use is 0x76    
-    if (!status) {
-        Serial.println("Could not find a valid BME280 sensor, check wiring!");
-        while (1);
-    }
+  bme.begin(0x76);  //The I2C address of the sensor I use is 0x76    
+
   gpsSerial.begin(BAUD_RATE);
   mq2.begin();
   Serial.begin(BAUD_RATE); //for status and debug
-  Serial.println("working");
   
   delay(5000);//delay before kicking things off
-  //setup_ESP();//go setup the ESP 
+//  setup_ESP();//go setup the ESP 
  
 }
 
@@ -256,7 +243,7 @@ void loop(){
   calcVoltage = voMeasured * (5/ 1024.0);            // recover voltage     //0 - 5V mapped to 0 - 1023 integer values
   dustDensity = (0.17 * calcVoltage - 0.1) * 1000.0;
   sent_PMA    = dustDensity;
-  
+
   Serial.print("MQ1 ");Serial.print(sent_MQ1);Serial.print("\n");
   Serial.print("sent_MQ2_lpg ");Serial.print(sent_MQ2_lpg);Serial.print("\n");
   Serial.print("sent_MQ2_co ");Serial.print(sent_MQ2_co);Serial.print("\n");
@@ -276,11 +263,12 @@ void loop(){
   Serial.print("sent_GPS_lat ");Serial.print(sent_GPS_lat);Serial.print("\n");
   Serial.print("sent_GPS_alt ");Serial.print(sent_GPS_alt);Serial.print("\n");
   Serial.print("sent_PMA ");Serial.print(sent_PMA);Serial.print("\n");
+
   
   //send_to_server_1(sent_MQ1,  sent_MQ2_lpg, sent_MQ2_co, sent_MQ2_smoke, sent_MQ3,
-    //               sent_MQ4, sent_MQ5, sent_MQ6, sent_MQ7, sent_MQ8, sent_MQ9,
-      //             sent_BME_temp, sent_BME_press, sent_BME_alt, sent_BME_humid,
-        //           sent_GPS_lon, sent_GPS_lat, sent_GPS_alt, sent_PMA);  
+  //                 sent_MQ4, sent_MQ5, sent_MQ6, sent_MQ7, sent_MQ8, sent_MQ9,
+  //                 sent_BME_temp, sent_BME_press, sent_BME_alt, sent_BME_humid,
+  //                 sent_GPS_lon, sent_GPS_lat, sent_GPS_alt, sent_PMA);  
 
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
   delay(1000);                       // wait for a second
