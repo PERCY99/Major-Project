@@ -19,7 +19,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-ser = serial.Serial(port='COM6', baudrate=9600, timeout=.100)
+ser = serial.Serial(port='COM7', baudrate=115200, timeout=.100)
 
 
 while True:
@@ -27,7 +27,7 @@ while True:
     print(data)
     db.collection('value').add({'MQ1' : data , 'date' : datetime_object})
     URl='https://api.thingspeak.com/update?api_key='
-    KEY='OWW4C0TPLPKDV3FWx'
+    KEY='OWW4C0TPLPKDV3FW'
     HEADER='&field1={}'.format(data)
     NEW_URL = URl+KEY+HEADER
     print(NEW_URL)
